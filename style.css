@@ -1,0 +1,37 @@
+h1
+{
+	text-align: center;
+}
+
+#container
+{
+	width: 70%;
+	margin: auto;
+}
+
+.hover-block
+{
+	width: 25%;
+	font-weight: bold;
+	border: none;
+	display: inline-block;
+	background: #9dbff5;
+	padding: 2vh 2vw;
+	text-align: center;
+}
+.unhover-block
+{
+	width: 25%;
+	font-weight: normal;
+	border: solid;
+	border-width: 1px;
+	border-color: #9dbff5;
+	display: inline-block;
+	background: white;
+	padding: 2vh 2vw;
+	text-align: center;
+}
+.content
+{
+	display: none;
+}
