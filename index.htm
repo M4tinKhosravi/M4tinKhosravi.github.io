@@ -1,38 +1,140 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <title>Hello World</title>
+<style>
+h1
+{
+	text-align: center;
+}
+
+#container
+{
+	width: 70%;
+	margin: auto;
+}
+
+.hover-block
+{
+	width: 25%;
+	font-weight: bold;
+	border: none;
+	display: inline-block;
+	background: #9dbff5;
+	padding: 2vh 2vw;
+	text-align: center;
+}
+.unhover-block
+{
+	width: 25%;
+	font-weight: normal;
+	border: solid;
+	border-width: 1px;
+	border-color: #9dbff5;
+	display: inline-block;
+	background: white;
+	padding: 2vh 2vw;
+	text-align: center;
+}
+.content
+{
+	display: none;
+}
+</style>
 </head>
 <body style="font-family: monospace;">
-<h1>Hello World</h1>
-<p>
-This is a simple landing page, which is going to improve, regularly.
-<br>
-You may wanna check <a href="https://blog.matink.ir">my persian weblog</a> or see my posts on <a href="https://www.instagram.com/matinkh0sravi">my instagram</a>.
+<h1>This is Matin Khosravi HomePage</h1>
+<div id="container" style="width: 70%; margin: auto;"></div>
+<div id="contents" style="width: 70%; margin: auto;">
+<p class="content" id="section-about">
+About Matin Khosravi...
 </p>
-<p>
-Currently, I'm gonna complete <a href="https://www.linkedin.com/in/matin-khosravi-largani">my LinkedIn page</a>, as well as <a href="https://github.com/M4tinKhosravi">my github portfolio</a>.
-<br>
-You will here more from me in:
-<ul>
-<li>Healthcare</li>
-<li>Web Applications</li>
-<ul>
-<li>Bootstrap and Design!</li>
-<li>Advanced Wordpress</li>
-<li>Laravel</li>
-<li><i>React</i></li>
-</ul>
-<li>Python</li>
-<li>Artificial Intelligence</li>
-</ul>
+
+<p class="content" id="section-skills">
+Matin Khosravi Skills
 </p>
-<b>See you soon!</b>
-<p>
-Update: Now I'm gonna improve this page wit React ^__^
+
+<p class="content" id="section-contact">
+Matin Khosravi Contact Data
 </p>
+</div>
+
+<script type="text/babel">
+
+class Block extends React.Component 
+{
+	constructor(props)
+	{
+		super(props)
+		this.state = {
+			hover: false,
+			key: this.props.handler
+		}
+				
+	}
+	
+	getStyle = (hover)  => {
+			if(hover)
+				return "hover-block"
+			else
+				return "unhover-block"
+	}
+	
+	onHover = (hover) =>
+	{
+		this.setState ({hover: hover})
+	}
+	
+	onClick = (id) =>
+	{
+		[...document.getElementsByClassName("content")].forEach( (e) => e.style.display = "none");
+		document.getElementById(id).style.display = "block";
+	}
+	
+	render() {
+		
+		return <div className={this.getStyle(this.state.hover)}
+		onMouseEnter={() => this.onHover(true)}
+		onMouseLeave={() => this.onHover(false)}
+		onClick={() => this.onClick(this.props.handler)}>{this.props.children}</div>
+	}
+}
+
+class Navbar extends React.Component 
+{
+	constructor(props)
+	{
+		super(props)
+		this.state = {
+			sections: [
+			{id: "section-about", title: "About Me"}, 
+			{id: "section-skills", title: "My Skills"}, 
+			{id: "section-contact", title: "Contact Me"}
+			]
+		}
+	}
+	
+	showSection = (block) => {
+		return (<Block handler={block.id}>{block.title}</Block>)
+	}
+	
+	render () {
+		return (<div id="navbar">
+		{this.state.sections.map(this.showSection)}
+		</div>)
+	}
+}
+
+
+
+const root = ReactDOM.createRoot(document.getElementById('container'));
+root.render(<Navbar />);
+
+
+</script>
+
 </body>
 </html>
